@@ -73,5 +73,5 @@ function startScan() {
             alert("Scanning failed: " + error);
         }
     );
-
-}
+};
+///////////////////////////////////END Barscanner JS

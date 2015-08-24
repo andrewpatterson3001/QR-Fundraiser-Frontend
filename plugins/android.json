@@ -15,6 +15,10 @@
                         {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -540,6 +544,9 @@
             "PACKAGE_NAME": "com.example.Scantest"
         },
         "cordova-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.example.Scantest"
+        },
+        "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.example.Scantest"
         }
     },
