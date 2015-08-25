@@ -50,24 +50,40 @@
 
 // app.initialize();
 
-///////////////  Code for Barcode Scanner
 
 var resultDiv;
 
 document.addEventListener("deviceready", init, false);
+///////////////  Code for Barcode Scanner
 function init() {
     document.querySelector("#startScan").addEventListener("touchend", startScan, false);
     resultDiv = document.querySelector("#results");
+
+    document.querySelector("#signIn").addEventListener("touchend", logInForm, false);
+
+    $('#signIn').on("click", function(){
+        console.log('Signing in!')
+    })
+
+    document.querySelector("#loginform").addEventListener("touchend", startSession, false);
+
+    $('#loginform').on("click", function(){
+        console.log('Logging in!')
+    })
+
 }
+
+
 
 function startScan() {
 
     cordova.plugins.barcodeScanner.scan(
         function (result) {
-            var s = "Result: " + result.text + "<br/>" +
+            var s = "Result: " + "<a href=" + result.text + ">"+ "Click here to sign up"  +"</a>" + "<br/>" +
             "Format: " + result.format + "<br/>" +
             "Cancelled: " + result.cancelled;
-            resultDiv.innerHTML = s;
+            var signUpLink = "<a href=" + result.text + ">"+ "Click here to sign up"  +"</a>"
+            resultDiv.innerHTML = signUpLink;
         },
         function (error) {
             alert("Scanning failed: " + error);
@@ -75,3 +91,16 @@ function startScan() {
     );
 };
 ///////////////////////////////////END Barscanner JS
+
+function logInForm () {
+    var form = ("<form action='#' method='post'> Email:<br><input type='text' name='email'><br> Password:<br><input type='text' name='password_digest'><br><input type='button' value='Login!!!' id='loginform'></form>")
+    resultDiv.innerHTML = form;
+};
+
+function startSession() {
+    //alert('hi'); Had trouble getting this alert to fire.
+
+    //$.ajax({type: "POST", url: "http://localhost:3000/sessions", data: form.serialize}).done
+};
+
+
