@@ -53,7 +53,9 @@
 
 var resultDiv;
 
-document.addEventListener("deviceready", init, false);
+// document.addEventListener("deviceready", init, false);
+//toggled on and off when debugging in chrome
+
 ///////////////  Code for Barcode Scanner
 function init() {
     document.querySelector("#startScan").addEventListener("touchend", startScan, false);
@@ -61,19 +63,16 @@ function init() {
 
     document.querySelector("#signIn").addEventListener("touchend", logInForm, false);
 
-    $('#signIn').on("click", function(){
-        console.log('Signing in!')
+    $(document).on("touchend", "#loginform", function(event){
+        event.preventDefault();
+        alert('working');
     })
 
-    document.querySelector("#loginform").addEventListener("touchend", startSession, false);
 
-    $('#loginform').on("click", function(){
-        console.log('Logging in!')
-    })
 
 }
 
-
+init(); //Toggle this on and off when debugging in chrome
 
 function startScan() {
 
@@ -93,12 +92,13 @@ function startScan() {
 ///////////////////////////////////END Barscanner JS
 
 function logInForm () {
+    alert('yo');
     var form = ("<form action='#' method='post'> Email:<br><input type='text' name='email'><br> Password:<br><input type='text' name='password_digest'><br><input type='button' value='Login!!!' id='loginform'></form>")
     resultDiv.innerHTML = form;
 };
 
 function startSession() {
-    //alert('hi'); Had trouble getting this alert to fire.
+    alert('hi');
 
     //$.ajax({type: "POST", url: "http://localhost:3000/sessions", data: form.serialize}).done
 };
