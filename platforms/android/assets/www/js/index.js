@@ -50,24 +50,41 @@
 
 // app.initialize();
 
-///////////////  Code for Barcode Scanner
 
 var resultDiv;
 
-document.addEventListener("deviceready", init, false);
+// document.addEventListener("deviceready", init, false);
+//toggled on and off when debugging in chrome
+
+///////////////  Code for Barcode Scanner
 function init() {
     document.querySelector("#startScan").addEventListener("touchend", startScan, false);
     resultDiv = document.querySelector("#results");
+
+    document.querySelector("#signIn").addEventListener("touchend", logInForm, false);
+
+
+    $(document).on("touchend", "#loginform", function(event){
+        event.preventDefault();
+        alert('working');
+    })
+    // document.querySelector("#loginform").addEventListener("click", startSession, false);
+
+
+
 }
+
+init(); //Toggle this on and off when debugging in chrome
 
 function startScan() {
 
     cordova.plugins.barcodeScanner.scan(
         function (result) {
-            var s = "Result: " + result.text + "<br/>" +
+            var s = "Result: " + "<a href=" + result.text + ">"+ "Click here to sign up"  +"</a>" + "<br/>" +
             "Format: " + result.format + "<br/>" +
             "Cancelled: " + result.cancelled;
-            resultDiv.innerHTML = s;
+            var signUpLink = "<a href=" + result.text + ">"+ "Click here to sign up"  +"</a>"
+            resultDiv.innerHTML = signUpLink;
         },
         function (error) {
             alert("Scanning failed: " + error);
@@ -75,3 +92,17 @@ function startScan() {
     );
 };
 ///////////////////////////////////END Barscanner JS
+
+function logInForm () {
+    alert('yo');
+    var form = ("<form action='#' method='post'> Email:<br><input type='text' name='email'><br> Password:<br><input type='text' name='password_digest'><br><input type='button' value='Login!!!' id='loginform'></form>")
+    resultDiv.innerHTML = form;
+};
+
+function startSession() {
+    alert('hi');
+
+    //$.ajax({type: "POST", url: "http://localhost:3000/sessions", data: form.serialize}).done
+};
+
+

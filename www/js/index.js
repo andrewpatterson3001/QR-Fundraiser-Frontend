@@ -50,24 +50,39 @@
 
 // app.initialize();
 
-///////////////  Code for Barcode Scanner
 
 var resultDiv;
 
-document.addEventListener("deviceready", init, false);
+// document.addEventListener("deviceready", init, false);
+//toggled on and off when debugging in chrome
+
+///////////////  Code for Barcode Scanner
 function init() {
-    document.querySelector("#startScan").addEventListener("touchend", startScan, false);
+    document.querySelector("#startScan").addEventListener("click", startScan, false);
     resultDiv = document.querySelector("#results");
+
+    document.querySelector("#signIn").addEventListener("click", logInForm, false);
+
+    $(document).on("click", "#loginform", function(event){
+        event.preventDefault();
+        startSession();
+    })
+
+
+
 }
+
+init(); //Toggle this on and off when debugging in chrome
 
 function startScan() {
 
     cordova.plugins.barcodeScanner.scan(
         function (result) {
-            var s = "Result: " + result.text + "<br/>" +
+            var s = "Result: " + "<a href=" + result.text + ">"+ "Click here to sign up"  +"</a>" + "<br/>" +
             "Format: " + result.format + "<br/>" +
             "Cancelled: " + result.cancelled;
-            resultDiv.innerHTML = s;
+            var signUpLink = "<a href=" + result.text + ">"+ "Click here to sign up"  +"</a>"
+            resultDiv.innerHTML = signUpLink;
         },
         function (error) {
             alert("Scanning failed: " + error);
@@ -75,3 +90,21 @@ function startScan() {
     );
 };
 ///////////////////////////////////END Barscanner JS
+
+function logInForm () {
+    var form = ("<form action='#' method='post'> Email:<br><input type='text' name='email'><br> Password:<br><input type='text' name='password_digest'><br><input type='button' value='Login!!!' id='loginform'></form>")
+    resultDiv.innerHTML = form;
+};
+
+function startSession() {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/sessions",
+        data: z.serialize,
+    }).done(function(response) {
+        $('body').empty();
+        $('body').append('<a href="#">' + 'Login Success! Continue to your Profile!' + '</a>')
+    });
+};
+
+
