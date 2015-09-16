@@ -58,14 +58,14 @@ var resultDiv;
 
 ///////////////  Code for Barcode Scanner
 function init() {
-    document.querySelector("#startScan").addEventListener("touchend", startScan, false);
+    document.querySelector("#startScan").addEventListener("click", startScan, false);
     resultDiv = document.querySelector("#results");
 
-    document.querySelector("#signIn").addEventListener("touchend", logInForm, false);
+    document.querySelector("#signIn").addEventListener("click", logInForm, false);
 
-    $(document).on("touchend", "#loginform", function(event){
+    $(document).on("click", "#loginform", function(event){
         event.preventDefault();
-        alert('working');
+        startSession();
     })
 
 
@@ -92,15 +92,19 @@ function startScan() {
 ///////////////////////////////////END Barscanner JS
 
 function logInForm () {
-    alert('yo');
     var form = ("<form action='#' method='post'> Email:<br><input type='text' name='email'><br> Password:<br><input type='text' name='password_digest'><br><input type='button' value='Login!!!' id='loginform'></form>")
     resultDiv.innerHTML = form;
 };
 
 function startSession() {
-    alert('hi');
-
-    //$.ajax({type: "POST", url: "http://localhost:3000/sessions", data: form.serialize}).done
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/sessions",
+        data: z.serialize,
+    }).done(function(response) {
+        $('body').empty();
+        $('body').append('<a href="#">' + 'Login Success! Continue to your Profile!' + '</a>')
+    });
 };
 
 
